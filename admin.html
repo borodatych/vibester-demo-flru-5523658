@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Админ-панель (демо) — Мария Волкова</title>
+<meta name="description" content="Демонстрация управления блоками сайта и журнала заявок без доступа к коду.">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<header class="admin-header">
+  <div class="container">
+    <strong>Админ-панель · демо</strong>
+    <span class="admin-badge">только для показа</span>
+    <a href="index.html">&larr; На сайт</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="container">
+
+    <section style="margin-bottom:48px">
+      <div class="section-eyebrow">Управление блоками</div>
+      <h1 style="margin-bottom:24px">Что видно на сайте без правки кода</h1>
+
+      <div class="toggle-row">
+        <div class="toggle-text">
+          <h3>Форма «Подписка на анонсы исследований»</h3>
+          <p>Блок на странице «Исследования» — выключите, когда не набираете подписчиков</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" id="subscribeToggle">
+          <span class="track"></span>
+          <span class="thumb"></span>
+        </label>
+      </div>
+
+      <p style="color:var(--color-muted); font-size:14px">
+        Переключатель сохраняется в браузере и переживает перезагрузку страницы.
+        В реальной сборке на WordPress это поле ACF/настройка блока в редакторе —
+        здесь то же поведение смоделировано без базы данных и логина.
+      </p>
+    </section>
+
+    <section>
+      <div class="section-eyebrow">Журнал заявок с сайта</div>
+      <h2 style="margin-bottom:20px">Заявки из форм «Исследований» и «Контактов»</h2>
+
+      <div id="logWrap"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-outline" id="clearLog" type="button">Очистить журнал</button>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© 2026 Демо-сайт, данные вымышлены</span>
+    <nav aria-label="Футер"><a href="index.html">На сайт</a></nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var TYPE_LABELS = {
+    interview: "Запись на интервью",
+    subscribe: "Подписка на анонсы",
+    contact: "Сообщение из контактов"
+  };
+
+  var toggle = document.getElementById("subscribeToggle");
+
+  function loadToggle() {
+    var stored = localStorage.getItem("siteAdmin.showResearchSubscribeForm");
+    toggle.checked = stored === null ? true : stored === "true";
+  }
+  loadToggle();
+
+  toggle.addEventListener("change", function () {
+    localStorage.setItem("siteAdmin.showResearchSubscribeForm", toggle.checked ? "true" : "false");
+  });
+
+  function fieldSummary(type, data) {
+    if (type === "interview") return data.name + " · " + data.email + " · " + data.experience;
+    if (type === "subscribe") return data.email;
+    if (type === "contact") return data.name + " · " + data.email + " · " + data.message;
+    return JSON.stringify(data);
+  }
+
+  function formatDate(iso) {
+    var d = new Date(iso);
+    return d.toLocaleString("ru-RU", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+  }
+
+  function renderLog() {
+    var wrap = document.getElementById("logWrap");
+    var list = [];
+    try {
+      list = JSON.parse(localStorage.getItem("siteSubmissions")) || [];
+    } catch (e) {
+      list = [];
+    }
+
+    wrap.innerHTML = "";
+
+    if (!list.length) {
+      var empty = document.createElement("div");
+      empty.className = "admin-empty";
+      empty.innerHTML = "Заявок пока нет.<br>Заполните форму на странице «Исследования» или «Контакты» на сайте — запись появится здесь.";
+      wrap.appendChild(empty);
+      return;
+    }
+
+    var table = document.createElement("table");
+    table.className = "admin-table";
+    table.innerHTML =
+      "<thead><tr><th>Когда</th><th>Форма</th><th>Данные</th></tr></thead>";
+    var tbody = document.createElement("tbody");
+
+    list.slice().reverse().forEach(function (item) {
+      var tr = document.createElement("tr");
+      var tdDate = document.createElement("td");
+      tdDate.textContent = formatDate(item.timestamp);
+      var tdType = document.createElement("td");
+      tdType.textContent = TYPE_LABELS[item.type] || item.type;
+      var tdData = document.createElement("td");
+      tdData.textContent = fieldSummary(item.type, item.data);
+      tr.appendChild(tdDate);
+      tr.appendChild(tdType);
+      tr.appendChild(tdData);
+      tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    wrap.appendChild(table);
+  }
+
+  renderLog();
+
+  document.getElementById("clearLog").addEventListener("click", function () {
+    localStorage.removeItem("siteSubmissions");
+    renderLog();
+  });
+
+  window.addEventListener("storage", function (e) {
+    if (e.key === "siteSubmissions") renderLog();
+    if (e.key === "siteAdmin.showResearchSubscribeForm") loadToggle();
+  });
+})();
+</script>
+</body>
+</html>

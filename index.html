@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мария Волкова — UX-исследователь и дизайнер интерфейсов</title>
+<meta name="description" content="Сайт-визитка UX-исследователя: опыт, проекты, запись на интервью, скачивание CV. Демонстрационный макет.">
+<link rel="canonical" href="./index.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Мария Волкова — UX-исследователь и дизайнер интерфейсов">
+<meta property="og:description" content="Исследования, которые превращаются в решения. Опыт, проекты, запись на интервью.">
+<meta property="og:image" content="assets/img/og-image.svg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Перейти к содержимому</a>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#hero">
+      <span class="brand-mark" aria-hidden="true">МВ</span>
+      <span>Мария Волкова</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="siteNav" aria-label="Открыть меню">
+      <span class="nav-toggle-bar"></span>
+    </button>
+    <nav class="site-nav" id="siteNav" aria-label="Основная навигация">
+      <ul id="navList"></ul>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="kicker" id="heroKicker"></span>
+        <h1 id="heroTitle"></h1>
+        <p class="subtitle" id="heroSubtitle"></p>
+        <div class="btn-row">
+          <a class="btn btn-primary" id="heroCtaPrimary" href="assets/files/cv-example.html" download>Скачать CV</a>
+          <a class="btn btn-outline" id="heroCtaSecondary" href="#contacts">Написать мне</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="hero-blob one"></div>
+        <div class="hero-blob two"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-avatar" id="heroInitials"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt" id="pains">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Почему это важно</div>
+        <h2>Где обычно теряются деньги и время команды</h2>
+      </div>
+      <div class="cards-3" id="painsGrid"></div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Как это устроено</div>
+        <h2>Три шага от вопроса до решения</h2>
+      </div>
+      <div class="steps" id="stepsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section-alt" id="about">
+    <div class="container about-grid">
+      <div>
+        <div class="section-eyebrow">Обо мне</div>
+        <h2>Коротко о подходе к работе</h2>
+        <div class="about-text" id="aboutText"></div>
+      </div>
+      <div>
+        <div class="section-eyebrow">Чем занимаюсь</div>
+        <ul class="skill-list" id="skillList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Опыт и проекты</div>
+        <h2>Где работала и что получилось</h2>
+      </div>
+      <table class="exp-table">
+        <thead>
+          <tr>
+            <th>Период</th>
+            <th>Роль</th>
+            <th>Место</th>
+            <th>Результат</th>
+          </tr>
+        </thead>
+        <tbody id="expBody"></tbody>
+      </table>
+      <div class="projects-grid" id="projectsGrid"></div>
+    </div>
+  </section>
+
+  <section class="section-alt" id="research">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Исследования</div>
+        <h2>Сейчас набираю участников для интервью</h2>
+        <p id="researchIntro"></p>
+      </div>
+      <div class="research-forms">
+
+        <form class="form-card" id="interviewForm" novalidate>
+          <h3 id="interviewTitle"></h3>
+          <p class="form-desc" id="interviewText"></p>
+
+          <div class="field" data-field="name">
+            <label for="int-name">Имя</label>
+            <input type="text" id="int-name" name="name" autocomplete="name">
+            <p class="field-error">Укажите, как к вам обращаться</p>
+          </div>
+
+          <div class="field" data-field="email">
+            <label for="int-email">Почта</label>
+            <input type="email" id="int-email" name="email" autocomplete="email">
+            <p class="field-error">Проверьте формат почты, например vasya@example.com</p>
+          </div>
+
+          <div class="field" data-field="experience">
+            <label for="int-experience">Какой продукт используете чаще всего</label>
+            <input type="text" id="int-experience" name="experience" autocomplete="off">
+            <p class="field-error">Напишите одним-двумя словами</p>
+          </div>
+
+          <label class="field-check">
+            <input type="checkbox" id="int-consent" name="consent">
+            <span>Согласен(на), что со мной свяжутся по почте</span>
+          </label>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary" id="interviewSubmit"></button>
+          </div>
+          <div class="form-note" id="interviewNote" role="status"></div>
+        </form>
+
+        <form class="form-card" id="subscribeForm" novalidate>
+          <h3 id="subscribeTitle"></h3>
+          <p class="form-desc" id="subscribeText"></p>
+
+          <div class="field" data-field="email">
+            <label for="sub-email">Почта</label>
+            <input type="email" id="sub-email" name="email" autocomplete="email">
+            <p class="field-error">Проверьте формат почты, например vasya@example.com</p>
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-outline" id="subscribeSubmit"></button>
+          </div>
+          <div class="form-note" id="subscribeNote" role="status"></div>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="trust">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Отзывы</div>
+        <h2>Что говорят после совместной работы</h2>
+      </div>
+      <div class="testimonial-grid" id="testimonialGrid"></div>
+      <div class="logo-row" id="logoRow"></div>
+    </div>
+  </section>
+
+  <section class="section-alt" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-eyebrow">Вопросы</div>
+        <h2>Что обычно спрашивают перед началом</h2>
+      </div>
+      <div class="faq-list" id="faqList"></div>
+    </div>
+  </section>
+
+  <section id="cta">
+    <div class="container">
+      <div class="final-cta">
+        <h2 id="finalCtaTitle"></h2>
+        <p id="finalCtaText"></p>
+        <div class="btn-row">
+          <a class="btn btn-accent" id="finalCtaBtn" href="#contacts"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-alt" id="contacts">
+    <div class="container contacts-grid">
+      <div>
+        <div class="section-eyebrow">Контакты</div>
+        <h2>Как со мной связаться</h2>
+
+        <ul class="contact-list" id="contactList"></ul>
+
+        <div class="contact-actions">
+          <a class="btn btn-primary" id="downloadCvBtn" href="assets/files/cv-example.html" download>Скачать CV</a>
+          <button class="btn btn-outline" id="saveContactBtn" type="button">Сохранить контакт (vCard)</button>
+        </div>
+        <p class="contact-feedback" id="contactFeedback"></p>
+
+        <form id="contactForm" novalidate style="margin-top:28px">
+          <div class="field" data-field="name">
+            <label for="c-name">Имя</label>
+            <input type="text" id="c-name" name="name" autocomplete="name">
+            <p class="field-error">Укажите имя</p>
+          </div>
+          <div class="field" data-field="email">
+            <label for="c-email">Почта</label>
+            <input type="email" id="c-email" name="email" autocomplete="email">
+            <p class="field-error">Проверьте формат почты</p>
+          </div>
+          <div class="field" data-field="message">
+            <label for="c-message">Сообщение</label>
+            <textarea id="c-message" name="message"></textarea>
+            <p class="field-error">Расскажите в двух словах о задаче</p>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Отправить</button>
+          </div>
+          <div class="form-note" id="contactFormNote" role="status"></div>
+        </form>
+      </div>
+
+      <div class="qr-card">
+        <img src="assets/img/qr-example.svg" alt="QR-код со ссылкой на страницу контактов, демонстрационный пример" width="160" height="160">
+        <p>QR-код на эту страницу — пример для печатных визиток</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© 2026 Демо-сайт, данные вымышлены</span>
+    <nav aria-label="Футер"><a href="admin.html">Админ-панель (демо)</a></nav>
+  </div>
+</footer>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
